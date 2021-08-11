@@ -1,15 +1,7 @@
-# gradient-gen
+# empty notebook
 
-generate gradient backgrounds to match your [pywal](https://github.com/dylanaraps/pywal) colors.
+an empty jupyter notebook project
 
-An example gradient:
+# install
 
-[[gradient.png]]
-
-## install
-
-```
-bash setup.sh
-```
-
-open the notebook for more details.
+`bash setup.sh`
