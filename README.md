@@ -54,9 +54,9 @@ Did this tool save you time or money? Delegate with me!
 
 Stake with me:
 
-- Juno -  [elsehow](https://www.mintscan.io/juno/validators/junovaloper175q6smvgnuec5e62rs4chnu5cs8d98q2e4l6cl) (`junovaloper175q6smvgnuec5e62rs4chnu5cs8d98q2e4l6cl`)
-- Stargaze - [elsehow](https://www.mintscan.io/stargaze/validators/starsvaloper1hvw778wslvyxh6mmv3sy96mwnaw80elmrswc6h)(`starsvaloper1hvw778wslvyxh6mmv3sy96mwnaw80elmrswc6h`)
-- Oasis - [Daylight Network](https://www.oasisscan.com/validators/detail/oasis1qra3rvq7y055waxmnx8rc0nad3frr8na2s9l8l3f) (`oasis1qra3rvq7y055waxmnx8rc0nad3frr8na2s9l8l3f`)
+- Juno -  [elsehow](https://www.mintscan.io/juno/validators/junovaloper175q6smvgnuec5e62rs4chnu5cs8d98q2e4l6cl) `junovaloper175q6smvgnuec5e62rs4chnu5cs8d98q2e4l6cl`
+- Stargaze - [elsehow](https://www.mintscan.io/stargaze/validators/starsvaloper1hvw778wslvyxh6mmv3sy96mwnaw80elmrswc6h) `starsvaloper1hvw778wslvyxh6mmv3sy96mwnaw80elmrswc6h`
+- Oasis - [Daylight Network](https://www.oasisscan.com/validators/detail/oasis1qra3rvq7y055waxmnx8rc0nad3frr8na2s9l8l3f) `oasis1qra3rvq7y055waxmnx8rc0nad3frr8na2s9l8l3f`
 
 Or pay what you think is fair:
 
