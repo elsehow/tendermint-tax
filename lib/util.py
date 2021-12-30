@@ -123,12 +123,15 @@ def extract_outflow_transfer (events: List[Dict], my_address: str):
     return extract_transfer(events, 'transfer', 'sender', my_address)
 
 
-def extract_inflow_spends (events: List[Dict], my_address: str) -> List[int]:
-    return extract_transfer(events, 'coin_received', 'receiver', my_address)
+# TODO - these spends appear to be redundant with transfers, but we should verify this.
+#        documentation on these event types would be helpful.
+
+# def extract_inflow_spends (events: List[Dict], my_address: str) -> List[int]:
+#     return extract_transfer(events, 'coin_received', 'receiver', my_address)
 
 
-def extract_outflow_spends (events: List[Dict], my_address: str):
-    return extract_transfer(events, 'coin_spent', 'spender', my_address)
+# def extract_outflow_spends (events: List[Dict], my_address: str):
+#     return extract_transfer(events, 'coin_spent', 'spender', my_address)
 
 
 def inflows_outflows (txs: List[Dict], my_address:str) -> float:
@@ -139,8 +142,8 @@ def inflows_outflows (txs: List[Dict], my_address:str) -> float:
     outflows = []
     for tx in txs:
         es = events(tx)
-        inflow = extract_inflow_staking_rewards(es) + extract_inflow_staking_commission(es) + extract_inflow_transfer(es, my_address) + extract_inflow_spends(es, my_address)
-        outflow =  extract_outflow_staking_delegations(es)  + extract_outflow_transfer(es, my_address) + extract_outflow_spends(es, my_address)
+        inflow = extract_inflow_staking_rewards(es) + extract_inflow_staking_commission(es) + extract_inflow_transfer(es, my_address) #+ extract_inflow_spends(es, my_address)
+        outflow =  extract_outflow_staking_delegations(es)  + extract_outflow_transfer(es, my_address) #+ extract_outflow_spends(es, my_address)
         inflows.append(sum(flatten(inflow)))
         outflows.append(sum(flatten(outflow)))
     return inflows, outflows
