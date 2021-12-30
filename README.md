@@ -58,14 +58,14 @@ Stake with me:
 - Stargaze - [elsehow](https://www.mintscan.io/stargaze/validators/starsvaloper1hvw778wslvyxh6mmv3sy96mwnaw80elmrswc6h) `starsvaloper1hvw778wslvyxh6mmv3sy96mwnaw80elmrswc6h`
 - Oasis - [Daylight Network](https://www.oasisscan.com/validators/detail/oasis1qra3rvq7y055waxmnx8rc0nad3frr8na2s9l8l3f) `oasis1qra3rvq7y055waxmnx8rc0nad3frr8na2s9l8l3f`
 
+*Did you know? You don't have to unstake to move your delegation. You can redelegate immediately without unbonding.*
+
 Or pay what you think is fair:
 
 - Cosmos - `cosmos175q6smvgnuec5e62rs4chnu5cs8d98q2s62wy6`
 - Osmosis - `osmo175q6smvgnuec5e62rs4chnu5cs8d98q2cpe7jg`
 - Akash -  `akash175q6smvgnuec5e62rs4chnu5cs8d98q2ap8faq`
 - Regen - `regen175q6smvgnuec5e62rs4chnu5cs8d98q20cpjj7`
-
-*Did you know? You don't have to unstake to move your delegation. You can redelegate immediately without unbonding.*
 
 # License
 
