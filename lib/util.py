@@ -76,7 +76,7 @@ def udenom_to_int (udenom: str) -> int:
     return int(udenom.split('u')[0])
 
 
-def extract_reward_income (events: List[Dict], event_type):
+def extract_staking_activity (events: List[Dict], event_type):
     denoms = []
     for event in events:
         if event['type'] == event_type:
@@ -87,9 +87,21 @@ def extract_reward_income (events: List[Dict], event_type):
     return denoms
 
 
+def extract_inflow_staking_rewards (events) -> List[int]:
+    return extract_staking_activity(events, 'withdraw_rewards')
+
+
+def extract_inflow_staking_commission (events) -> List[int]:
+    return extract_staking_activity(events, 'withdraw_commission')
+
+
+def extract_outflow_staking_delegations (events) -> List[int]:
+    return extract_staking_activity(events, 'delegate')
+
+
 def extract_transfer (events: List[Dict], event_type: str, attr_key: str, attr_value: str) -> List[int]:
     '''
-    TODO - pretty similar to method above
+    TODO - pretty similar to `extract_reward_income`. make DRY?
     '''
     denoms = []
     for event in events:
@@ -103,44 +115,44 @@ def extract_transfer (events: List[Dict], event_type: str, attr_key: str, attr_v
     return denoms
 
 
-def extract_staking_rewards (events) -> List[int]:
-    return extract_reward_income(events, 'withdraw_commission')
+def extract_inflow_transfer(events: List[Dict], my_address: str) -> List[int]:
+    return extract_transfer(events, 'transfer', 'recipient', my_address)
 
 
-def extract_staking_commission (events) -> List[int]:
-    return extract_reward_income(events, 'withdraw_rewards')
+def extract_outflow_transfer (events: List[Dict], my_address: str):
+    return extract_transfer(events, 'transfer', 'sender', my_address)
 
 
-def extract_staking_delegations(events) -> List[int]:
-    return extract_reward_income(events, 'delegate')
+def extract_inflow_spends (events: List[Dict], my_address: str) -> List[int]:
+    return extract_transfer(events, 'coin_received', 'receiver', my_address)
 
 
-def extract_receipts (events: List[Dict], my_address: str) -> List[int]:
-    return  extract_transfer(events, 'transfer', 'recipient', my_address) #+ extract_transfer(events, 'coin_received', 'receiver', my_address)
+def extract_outflow_spends (events: List[Dict], my_address: str):
+    return extract_transfer(events, 'coin_spent', 'spender', my_address)
 
 
-def extract_spends (events: List[Dict], my_address: str):
-    return  extract_transfer(events, 'transfer', 'sender', my_address) # extract_transfer(events, 'coin_spent', 'spender', my_address) +
+def inflows_outflows (txs: List[Dict], my_address:str) -> float:
+    '''
+    Get the inflows (tokens coming in) and outflows (tokens going out) across
+    '''
+    inflows = []
+    outflows = []
+    for tx in txs:
+        es = events(tx)
+        inflow = extract_inflow_staking_rewards(es) + extract_inflow_staking_commission(es) + extract_inflow_transfer(es, my_address) + extract_inflow_spends(es, my_address)
+        outflow =  extract_outflow_staking_delegations(es)  + extract_outflow_transfer(es, my_address) + extract_outflow_spends(es, my_address)
+        inflows.append(sum(flatten(inflow)))
+        outflows.append(sum(flatten(outflow)))
+    return inflows, outflows
 
 
 def udenom_to_readable(udenom: int) -> float:
     return udenom/1000000
 
 
-def inflows_outflows (txs: List[Dict], my_address:str) -> float:
-    inflows = []
-    outflows = []
-    for tx in txs:
-        es = events(tx)
-        inflow = extract_staking_rewards(es) + extract_staking_commission(es) + extract_receipts(es, my_address)
-        outflow =  extract_staking_delegations(es) + extract_spends(es, my_address)
-        inflows.append(sum(flatten(inflow)))
-        outflows.append(sum(flatten(outflow)))
-    return inflows, outflows
-
-
 def block_height (tx) -> int:
     return int(tx['height'])
+
 
 def block_time (rpc: str, height: int) -> str:
     '''
@@ -195,3 +207,5 @@ def get_holdings (rest_endpoint: str, address: str) -> int:
 
     holdings = sum(get_delegations()) + sum(get_unbonding()) # + get_balance()
     return holdings
+
+
