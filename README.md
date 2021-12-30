@@ -51,7 +51,7 @@ for financial year Jan 1, 2021 - Dec 31, 2021, saving the resulting file as `jun
 python3 tendermint-tax.py --rpc  https://rpc-juno.itastakers.com --address juno175q6smvgnuec5e62rs4chnu5cs8d98q2xgf4rx --ticker JUNO --fystart "2021-01-01" --fyend "2021-12-31" --outfile "juno.csv" -v
 ```
 
-See all arguments with `python3 tendermint-tax.py --help`.
+See detailed help on all arguments with `python3 tendermint-tax.py --help`.
 
 # Did this tool help you?
 

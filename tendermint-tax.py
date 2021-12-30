@@ -7,19 +7,21 @@ import argparse
 
 parser = argparse.ArgumentParser(description='Compute the historical fair market value for staking rewards on Tendermint chains.')
 
-parser.add_argument('--rpc', type=str,
+required = parser.add_argument_group('required')
+
+required.add_argument('--rpc', type=str,
                     help='An RPC endpoint for your network (e.g., https://rpc-juno.itastakers.com)')
 
-parser.add_argument('--address', type=str,
+required.add_argument('--address', type=str,
                     help='Your wallet address (e.g., juno175q6smvgnuec5e62rs4chnu5cs8d98q2xgf4rx)')
 
-parser.add_argument('--ticker', type=str,
+required.add_argument('--ticker', type=str,
                     help='Osmosis ticker for token (e.g., "JUNO")')
 
-parser.add_argument('--fystart', type=str,
+required.add_argument('--fystart', type=str,
                     help='Start of financial year (e.g., "2021-01-01")')
 
-parser.add_argument('--fyend', type=str,
+required.add_argument('--fyend', type=str,
                     help='End of the financial year (e.g., "2021-12-31")')
 
 parser.add_argument('--outfile', type=str,
