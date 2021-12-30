@@ -71,3 +71,7 @@ Or pay what you think is fair:
 - Regen - `regen175q6smvgnuec5e62rs4chnu5cs8d98q20cpjj7`
 
 *Did you know? You don't have to unstake to move your delegation. You can redelegate immediately without unbonding.*
+
+# License
+
+BSD-3
