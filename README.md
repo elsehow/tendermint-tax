@@ -27,27 +27,22 @@ You have been warned.
 git clone git@github.com:elsehow/tendermint-tax
 cd tendermint-tax
 # create a python virtual machine
-python3 venv/bin/activate
-# activate it
+python3 -m venv venv
 source venv/bin/activate
 # install the dependences
 pip3 install -r requirements.txt
 ```
 
-**Important!** - Make sure your Python virtual machine is active when you run `tendermint-tax`! Make sure you do this before you run it:
-
-``` sh
-source venv/bin/activate
-```
-
 # Use
-
 
 This command will get the FMV at time of reciept for
 the address `juno175q6smvgnuec5e62rs4chnu5cs8d98q2xgf4rx`
 for financial year Jan 1, 2021 - Dec 31, 2021, saving the resulting file as `juno.csv`:
 
 ```
+# make sure virtual machine is active
+source venv/bin/activate
+# run tendermint-tax
 python3 tendermint-tax.py --rpc  https://rpc-juno.itastakers.com --address juno175q6smvgnuec5e62rs4chnu5cs8d98q2xgf4rx --ticker JUNO --fystart "2021-01-01" --fyend "2021-12-31" --outfile "juno.csv" -v
 ```
 
