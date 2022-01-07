@@ -73,7 +73,10 @@ def find_attr_value (attrs: List[Dict], attr_key: str):
 
 
 def udenom_to_int (udenom: str) -> int:
-    return int(udenom.split('u')[0])
+    try:
+        return int(udenom.split('u')[0])
+    except:
+        return 0
 
 
 def extract_staking_activity (events: List[Dict], event_type):
@@ -178,37 +181,36 @@ def fmv (price):
     return (price['high'] + price['low']) / 2
 
 
-def get_holdings (rest_endpoint: str, address: str) -> int:
-    '''
-    Get the number of tokens currently held by `address` across delegated, unbonding, and unstaked tokens.
-    '''
+# TODO - depricated - see https://github.com/elsehow/tendermint-tax/issues/2
+# def get_holdings (rest_endpoint: str, address: str) -> int:
+#     '''
+#     Get the number of tokens currently held by `address` across delegated, unbonding, and unstaked tokens.
+#     '''
 
-    def rest (path):
-        return get(rest_endpoint + path).json()
+#     def rest (path):
+#         return get(rest_endpoint + path).json()
 
-    def get_amount (balance: dict) -> int:
-        return int(balance['amount'])
+#     def get_amount (balance: dict) -> int:
+#         return int(balance['amount'])
 
-    # def get_balance () -> int:
-    #     if not denom:
-    #         resp = rest(f"/cosmos/bank/v1beta1/balances/{address}")
-    #         return get_amount(resp['balances'][0])
-    #     else:
-    #         resp = rest(f"/cosmos/bank/v1beta1/balances/{address}/{denom}")
-    #         return get_amount(resp['balance'])
+#     # def get_balance () -> int:
+#     #     if not denom:
+#     #         resp = rest(f"/cosmos/bank/v1beta1/balances/{address}")
+#     #         return get_amount(resp['balances'][0])
+#     #     else:
+#     #         resp = rest(f"/cosmos/bank/v1beta1/balances/{address}/{denom}")
+#     #         return get_amount(resp['balance'])
 
-    def get_delegations () -> List[int]:
-        resp = rest(f"/cosmos/staking/v1beta1/delegations/{address}")
-        return [get_amount(d['balance']) for d in resp['delegation_responses']]
+#     def get_delegations () -> List[int]:
+#         resp = rest(f"/cosmos/staking/v1beta1/delegations/{address}")
+#         return [get_amount(d['balance']) for d in resp['delegation_responses']]
 
-    def get_unbonding () -> List[int]:
-        resp = rest(f"/cosmos/staking/v1beta1/delegators/{address}/unbonding_delegations")
-        return flatten([
-            [int(e['balance'])  for e in r['entries']]
-            for r in resp['unbonding_responses']
-        ])
+#     def get_unbonding () -> List[int]:
+#         resp = rest(f"/cosmos/staking/v1beta1/delegators/{address}/unbonding_delegations")
+#         return flatten([
+#             [int(e['balance'])  for e in r['entries']]
+#             for r in resp['unbonding_responses']
+#         ])
 
-    holdings = sum(get_delegations()) + sum(get_unbonding()) # + get_balance()
-    return holdings
-
-
+#     holdings = sum(get_delegations()) + sum(get_unbonding()) # + get_balance()
+#     return holdings

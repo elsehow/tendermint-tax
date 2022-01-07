@@ -96,7 +96,8 @@ assert(merged_df['net'].sum() == sum(inflows) - sum(outflows))
 merged_df['net_usd'] = util.udenom_to_readable(merged_df['net'] * merged_df['price'])
 # Filter by financial year
 merged_df_fy =  merged_df[(merged_df['time']>=args.fystart) &
-                          (merged_df['time']<=args.fyend) ].drop_duplicates() # TODO - why are there duplicate rows?
+                          (merged_df['time']<=args.fyend) ].drop_duplicates()
+# TODO - why are there duplicate rows? see https://github.com/elsehow/tendermint-tax/issues/1
 
 logging.info(f"Computed net liability as ${merged_df_fy['net_usd'].sum()}")
 
