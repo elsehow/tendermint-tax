@@ -180,6 +180,9 @@ def fmv (price):
     '''
     return (price['high'] + price['low']) / 2
 
+def get_chain_info (name: str) -> Dict:
+    return get(f'https://raw.githubusercontent.com/cosmos/chain-registry/master/{name}/chain.json').json()
+
 
 # TODO - depricated - see https://github.com/elsehow/tendermint-tax/issues/2
 # def get_holdings (rest_endpoint: str, address: str) -> int:

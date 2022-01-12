@@ -9,8 +9,8 @@ parser = argparse.ArgumentParser(description='Compute the historical fair market
 
 required = parser.add_argument_group('required')
 
-required.add_argument('--rpc', type=str,
-                    help='An RPC endpoint for your network (e.g., https://rpc-juno.itastakers.com)')
+required.add_argument('--chain', type=str,
+                    help='The name of your chain. Refer to the folder names in the chain registry repo: https://github.com/cosmos/chain-registry/')
 
 required.add_argument('--address', type=str,
                     help='Your wallet address (e.g., juno175q6smvgnuec5e62rs4chnu5cs8d98q2xgf4rx)')
@@ -31,6 +31,9 @@ parser.add_argument('--outfile', type=str,
 parser.add_argument('--verbose', '-v', action='count', default=1,
                     help='Log verbosely. One -v is INFO. Try -vv, -vvv, etc.')
 
+parser.add_argument('--rpc', type=str,
+                    help='Specify a custom RPC. (Useful if you run your own).')
+
 args = parser.parse_args()
 
 # Configure logs
@@ -40,11 +43,21 @@ logging.basicConfig(level=args.verbose, format='%(asctime)s %(levelname)s: %(mes
                     datefmt='%Y-%m-%d %H:%M:%S')
 
 #
+# Get chain RPC
+#
+if args.rpc:
+    rpc = args.rpc
+else:
+    chain_info = util.get_chain_info(args.chain)
+    rpcs = [r['address'] for r in chain_info['apis']['rpc']]
+    rpc = rpcs[0] # TODO - recursively retry RPCs if one fails
+
+#
 # Query RPC for transactions involving the address in question
 #
 query = f"transfer.recipient='{args.address}'"
 logging.info(f'Querying RPC for {query}')
-txs = util.historical_txs(args.rpc, query)
+txs = util.historical_txs(rpc, query)
 
 #
 # Compute inflows and outlfows
@@ -52,7 +65,7 @@ txs = util.historical_txs(args.rpc, query)
 logging.info(f'Computing inflows and outflows for {args.address}')
 inflows, outflows = util.inflows_outflows(txs, args.address)
 logging.info(f'Querying RPC for the UTC time of each relevant block height')
-block_times = [util.block_time(args.rpc, util.block_height(tx)) for tx in txs]
+block_times = [util.block_time(rpc, util.block_height(tx)) for tx in txs]
 
 #
 # Find historical pricing data
